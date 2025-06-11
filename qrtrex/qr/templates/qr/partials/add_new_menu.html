@@ -1,0 +1,51 @@
+<div class="add-menu d-flex align-items-center justify-content-center mt-5 mb-3 border rounded-5 p-2 front-div">
+    <form method="POST" action="{% url 'new_menu'  %}" enctype="multipart/form-data" id="myform">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+            <h1 class="text-center">New Menu</h1>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Item Image</label>
+            <input class="form-control" type="file" name="image" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input class="form-control" type="text" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input class="form-control" type="number" name="price" required>
+        </div>
+        <div class="mb-3">
+              <label for="menu-category" class="form-label">Menu Category</label>
+              <select class="form-select" aria-label="Default select example" name="menu">
+                  {% for m in menu %}
+                  <option value="{{m.id}}">{{m.menu_name}}</option>
+                  {% endfor %}
+              </select>
+
+        </div>
+        <div class="mb-3">
+            <label for="food-category" class="form-label">Food Category</label>
+            <select class="form-select" aial-label="Default select example" name="category">
+                <option value="veg">Vegetarian</option>
+                <option value="non-veg">Non-Vegetarian</option>
+            </select>
+        </div>
+        <div class="form-check mb-3">
+          <input type="hidden" name="is_available" value="False">
+          <input class="form-check-input" type="checkbox" value="True" name="is_available" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+              Is Available
+          </label>
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-in mx-2">Add</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-warning mx-2">Cancel</a>
+        </div>
+    </form>
+</div>

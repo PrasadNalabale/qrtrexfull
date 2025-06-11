@@ -1,0 +1,48 @@
+{% extends 'qr/qr_menu_base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+
+        <div class="row text-center my-4 gy-3">
+            <div class="col-6">
+                <a href="">
+                    <div class="card info-card p-3">
+                        <div class="icon"><i class="fa-solid fa-utensils"></i></div>
+                        <div class="fw-bold my-2">
+                            <a href="{% url 'qr_menu' id table_number %}">Menu</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6">
+                <a href="">
+                    <div class="card info-card p-3">
+                        <div class="icon"><i class="fa-regular fa-comment"></i></div>
+                        <div class="fw-bold my-2">
+                            <a href="{% url 'ratings' id table_number %}">Feedback</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% if liquor %}
+            <div class="col-6">
+                <a href="">
+                    <div class="card info-card p-3">
+                        <div class="icon"><i class="fa-solid fa-wine-bottle"></i></div>
+                        <div class="fw-bold my-2">
+                            <a href="{% url 'liquor' id table_number %}">Liquor</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+        
+{% endblock %}
+
+       
+
+        
+    

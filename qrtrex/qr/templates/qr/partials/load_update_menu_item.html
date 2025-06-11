@@ -1,0 +1,114 @@
+{% extends 'qr/dashboardBase.html' %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+
+
+
+
+
+<style>
+    /* .data {
+        width: 50%;
+        height:100%;
+    }
+    .photo {
+        width:50%;
+        height: 100%;
+    } */
+    .image {
+        width: 300px;
+        height: auto;
+    } 
+    .form-label {
+        opacity: 0.7;
+    }
+    .form-control, .form-select, .border-b {
+        border: 1px solid #efd1c1;
+        box-shadow: none;
+        color: #403f41;
+    }
+    
+    .btn-org {
+        border: 1px solid #fd6f02;
+        color: #fd6f02;
+    }
+    .btn-org:hover {
+        background-color: #fd6f02;
+        color: #ffffff;
+    }
+    .btn-dar, .btn-dar:hover {
+        border: 1px solid rgb(61, 61, 61);
+        color: black;
+    }
+        
+</style>
+
+<div class="container-fluid">
+    <form id ="restaurantForm" action="{% url 'update_menu_item' item.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row d-flex justify-content-center  p-2 gx-2 border rounded-5">
+            <div class="col-md-6 order-2 order-md-1 mt-5 mt-md-0">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input class="form-control" id="name" type="text" value="{{item.name}}" name="name">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label ">Description</label>
+                    <textarea class="form-control text-capitalize" id="description" rows="3"  name="description">{{item.description}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label ">Price</label>
+                    <input type="number" class="form-control" id="price" value="{{item.price}}" name="price">
+                </div>
+                <div class="mb-3">
+                    <select class="form-select" aria-label="Default select example" name="category">
+                        {% for value, display in item.CATEGORY %}
+                        <option value="{{value}}" {% if value == item.category %} selected {% endif %}>{{display}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input type="hidden" name="is_available" value="off">
+                    <input class="form-check-input" type="checkbox" value="on" name="is_available" id="flexCheckChecked" {% if item.is_available %}checked{% endif %}>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Is Available
+                    </label>
+                </div>
+            
+                <div class="my-3 d-flex justify-content-center ">
+                    <button type="submit" class="btn btn-org mx-2">Update</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-dar mx-2">Cancel</a>
+                </div>
+        
+            </div>
+            <div class="col-md-6 order-1 order-md-2">
+                <h1 class="text-center opacity-50 mt-5">Update Menu Image</h1>
+                
+                <div class="row mt-5 justify-content-center align-items-center">
+                    <div class="profile-image border rounded-2 image">
+                        <img id="logoPreview" src="{{ item.image.url }}" alt="{{ item.name }}'s image" class="img-fluid w-100">
+                    </div>
+            
+                    <!-- Hidden file input -->
+                    <input type="file" id="imageInput" accept="image/*" name="image" onchange = "readUrl(this,'logoPreview');" style="display: none;">
+            
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <button type="button" class="btn btn-org" onclick="document.getElementById('imageInput').click()">Upload</button>
+                        <button type="button" class="btn btn-dar" data-default-src="{% static 'qr/images/defaultMenuImage2.jpg' %}" onclick="removeImage('logoInput', 'logoPreview', this.getAttribute('data-default-src'))">Remove</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+  
+
+
+  

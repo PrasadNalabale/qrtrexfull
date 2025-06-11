@@ -1,0 +1,163 @@
+{% extends 'qr/base.html' %}
+{% load static %}
+{% block content %}
+{% include 'inc/qrtrex_navbar.html' %}
+<div id="notification" class="notification">
+    <span id="notification-message"></span>
+    <button onclick="closeNotification()">X</button>
+</div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 registration-card shadow rounded-3">
+        <h3 class="text-center text-primary">Sign Up</h3>
+        {% if messages %}
+        <div class="alert alert-danger mt-3">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="my-3">
+                <label class="form-label"> First Name</label>
+                <input type="text" class="form-control" placeholder="Enter your first name" name="fname">
+                <label class="form-label"> Last Name</label>
+                <input type="text" class="form-control" placeholder="Enter your last name" name="lname">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" placeholder="Enter your email" name="email">
+            </div>
+            <!-- <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-control" placeholder="Enter your phone number" name="phone">
+            </div> -->
+            <div class="mb-3 position-relative">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
+                    <span class="input-group-text" >
+                        <a type="btn btn-primary"  class="eye-icon" id="togglePassword1" onclick="showPassword(event,'password')"><i class="fa-solid fa-eye" id="togglePassword"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-3 position-relative">
+                <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirm_password" placeholder="Re-Enter your password" name="confirm_password">
+                    <span class="input-group-text" >
+                        <a type="btn btn-primary"  class="eye-icon" id="togglePassword1" onclick="showPassword(event,'confirm_password')"><i class="fa-solid fa-eye" id="togglePassword"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                <label class="form-check-label" for="acceptTerms">
+                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+        </form>
+        <p class="text-center mt-2">Already have an account? <a href="{% url 'login' %}" class="text-primary" >Login</a></p>
+    </div>
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body m-5" >
+                    <div class="row">
+                        <h5>Effective Date: 01/06/2025</h5>
+                        <p>Welcome to QrTrex's QR Menu System. By accessing or using our digital menu via QR code, you agree to the following Terms and Conditions. Please read them carefully.</p>
+                    </div>
+                    <div class="row">
+                        <h5>1. Acceptance of Terms</h5>
+                        <p>By scanning the QR code and accessing our digital menu, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the QR menu system.</p>
+                    </div>
+                    <div class="row">
+                        <h5>2. Service Description</h5>
+                        <p>Our QR menu system allows customers to access a digital version of our food and beverage offerings using their mobile device. This service is offered free of charge for your convenience.</p>
+                    </div>
+                    <div class="row">
+                        <h5>3. User Conduct</h5>
+                        <p>You agree to use the QR menu system for lawful purposes only. You must not:</p>
+                        <ul class="p-3">
+                            <li>Attempt to reverse engineer or modify the system.</li>
+                            <li>Interfere with the system's functionality.</li>
+                            <li>Use it to distribute malicious content or software.</li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <h5>4. Menu Accuracy</h5>
+                        <p>While we strive to keep all menu information accurate and up-to-date (including prices, ingredients, and availability), we reserve the right to change or update the content at any time without prior notice. Please consult staff for the latest information.</p>
+                    </div>
+                    <div class="row">
+                        <h5>5. Allergens & Dietary Information</h5>
+                        <p>We do our best to provide accurate allergen and dietary information. However, cross-contamination may occur. If you have a food allergy or special dietary requirements, please inform a staff member before placing an order.</p>
+                    </div>
+                    <div class="row">
+                        <h5>6. Intellectual Property</h5>
+                        <p>All content displayed in the QR menu, including text, images, and logos, is the property of QrTrex or its licensors. You may not copy, reproduce, or distribute any part of the digital menu without prior written consent.</p>
+                    </div>
+                    <div class="row">
+                        <h5>7. Privacy</h5>
+                        <p>We respect your privacy. Our QR menu system does not collect or store any personal data unless explicitly stated (e.g., if an ordering feature is integrated). For more information, please refer to our [Privacy Policy] if applicable.</p>
+                    </div>
+                    <div class="row">
+                        <h5>8. Limitation of Liability</h5>
+                        <p>QrTrex is not liable for any damages arising from your use or inability to use the QR menu system. Use is at your own risk.</p>
+                    </div>
+                    <div class="row">
+                        <h5>9. Changes to Terms</h5>
+                        <p>We may update these Terms and Conditions from time to time. Continued use of the QR menu after such updates constitutes your acceptance of the new terms.</p>
+                    </div>
+                    <div class="row">
+                        <h5>10. Contact Us</h5>
+                        <p>If you have any questions about these Terms and Conditions, please contact us at:</p>
+                        <p>help@qrtrex.com</p>
+                        <p>+91-9623920576</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showPassword(event,inputField) {
+    event.preventDefault(); // Prevent anchor tag from navigating
+    let passwordInput = document.getElementById(inputField);
+    // let togglePassword = document.getElementById("togglePassword");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+<!-- {% block scripts%}
+<script src="{% static 'qr/js/main.js' %}"></script>
+
+{% endblock%} -->

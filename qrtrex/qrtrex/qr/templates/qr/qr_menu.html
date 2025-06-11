@@ -1,0 +1,149 @@
+{% extends 'qr/qr_menu_base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+
+<style>
+    input::placeholder {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+    /* .offer-card {
+        width: 150px;
+        min-height: 120px;
+        border: 1px solid #ddd;
+        text-align: center;
+    } */
+</style>
+
+<div id="offerCarousel" class="carousel slide my-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for offer in offers %}
+        {% if offer.is_active %}
+        <div class="carousel-item active w-100 ">
+            <div class="d-flex justify-content-center gap-3">
+                <div class="card offer-card rounded-5 w-100">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">{{offer.title}}</h5>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-auto">
+                                <p class="card-text opacity-50">{{offer.description}}</p>
+                            </div>
+                            <div class="col m-0">
+                                <p class=" small text-end">Valid till : {{offer.end_date |date:"y-m-d"}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <!-- Add more carousel-item divs here for more sets -->
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#offerCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+<input type="hidden" id="restaurantIdInput" value="{{ restaurant.restaurant_id }}">
+<div class="container d-flex justify-content-center mt-3 input-group">
+    <input type="text" id="searchInput" class="rounded-5 w-100 text-center" placeholder="Search menu..." />
+</div>
+
+    <!-- <ul id="searchResults"></ul> -->
+
+
+
+<div class="men-display  rounded-4">
+
+    {% if menus %}
+    {% for menu in menus %}
+        {% if menu.items.all|length > 0 %}
+            <div class="accordion mt-2" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header opacity-50">
+                        <button class="accordion-button text-capitalize" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#collapse{{ menu.id }}" 
+                                aria-expanded="true" aria-controls="collapse{{ menu.id }}">
+                            {{ menu.menu_name }}
+                        </button>
+                    </h2>
+                    {% for item in menu.items.all %}
+                        <div id="collapse{{ menu.id }}" class="accordion-collapse collapse show border rounded-3 shadow-sm mt-2" 
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body menu-item-wrapper">
+                                <div class="row menuList d-flex align-items-center justify-content-center" 
+                                     data-item-id="{{ item.id }}" data-item-name="{{ item.name }}" 
+                                     data-item-price="{{ item.price }}">
+                                    <div class="col-4 menuImage">
+                                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid rounded-4 p-0" 
+                                             style="max-width: 100px; height: 77px;">
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="text-capitalize menusearch m-0"><strong>{{ item.name }}</strong></p>
+                                        <small class="menusearch">&#8377; {{ item.price | floatformat:0 }}</small>
+                                    </div>
+                                    
+                                    <div class="col-4 d-flex justify-content-center">
+                                        <button class="btn border add-btn rounded-3" style="color:#28a745;" onclick="addToCart(this)">Add</button>
+                                        <div class="quantity-wrapper d-none justify-content-center align-items-center">
+                                            <button class="qty-btn" onclick="changeQuantity(this, -1)">-</button>
+                                            <span class="qty qty-display text-center">1</span>
+                                            <button class="qty-btn" onclick="changeQuantity(this, 1)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+    <div class="addToCart mt-5">
+        <a href="{% url 'cart' restaurant.restaurant_id %}" 
+        class="btn btn-success rounded-bottom-0 p-2 go-to-cart mt-5 d-none d-flex justify-content-center  align-items-center" 
+        id="goToCartBtn"
+        style="font-size: 20px;">
+            <span class="mx-3">Go to Cart</span>
+            <span>( <small id="cartCount" class="text-center text-light" style="font-size: 12px;"></small> )</span>
+        </a>
+
+    </div>
+    
+</div>
+
+
+
+<script>
+const input = document.getElementById('searchInput');
+const text = input.getAttribute("placeholder");
+let i = 0;
+
+function typePlaceholder() {
+  if (i <= text.length) {
+    input.setAttribute("placeholder", text.substring(0, i));
+    i++;
+    setTimeout(typePlaceholder, 100); // adjust speed here
+  }
+}
+
+typePlaceholder();
+</script>
+
+{% block scripts %}
+<script src="{% static 'qr/js/search.js' %}"></script>
+
+<script src="{% static 'qr/js/menu.js' %}"></script>  
+
+{% endblock %}
+
+{% endblock %}

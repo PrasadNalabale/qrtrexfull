@@ -1,0 +1,33 @@
+{% extends 'qr/base.html' %}
+
+    {% block title %}Payment {% endblock %}
+
+        {% block content %}
+
+
+        <div class="container">
+            <form action="{% url 'generate_qr' %}" method="post"  class="p-4 border rounded shadow-sm bg-light">
+                {% csrf_token %}
+            
+                <!-- Total No. of Table's -->
+                <div class="mb-3">
+                    <label for="total_no_of_tables" class="form-label">Total No. of Table's</label>
+                    <input type="text" class="form-control" id="total_table" name="total_table" required >
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-outline-warning " value="submit">Generate & Download QR Codes PDF.</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        {% endblock %}

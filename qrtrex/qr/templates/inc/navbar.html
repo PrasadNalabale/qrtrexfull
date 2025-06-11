@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg ">
+    <div class="container-fluid">
+        <a class="navbar-brand fs-5 rounded-3" href="#">
+            <img src="{{ restaurant.logo.url }}" alt="Logo" width="30" height="24" style="border-radius:50%;">
+            {{restaurant.restaurant_name}}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link rounded-3 mx-md-2 fs-5" aria-current="page" href="{% url 'dashboard' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-3 mx-md-2 fs-5" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-3 mx-md-2 fs-5" href="{% url 'new_menu' user %}">New Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-3 mx-md-2 fs-5" href="{% url 'category' user %}">New Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-3 mx-md-2 fs-5" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

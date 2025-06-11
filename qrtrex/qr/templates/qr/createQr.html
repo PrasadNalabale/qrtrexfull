@@ -1,0 +1,25 @@
+{% extends 'qr/dashboardBase.html' %}
+{% load static %}
+{% block title %} Offers & Discounts {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center opacity-50 mt-2">Generate Qr Code's.</h3>
+    <form action="{% url 'qr-pdf' %}" method="POST">
+        {% csrf_token %}
+        <div class="col-md-6 mt-3">
+            <label for="qrinput" class="form-label">Enter table No.</label>
+            <input type="text" id="qrinput" class="form-control" name="table_number" placeholder="Enter single table number or name">
+        </div>
+        <div class="col-md-6">
+            <label for="toble_table" class="form-label">Enter total no of tables.</label>
+            <input type="text" class="form-control" id="toble_table" name="total_table">
+        </div>
+        <div class="col-md-6 mt-3">
+            <button type="submit" class="btn btn-org">Download</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-dar">Cancel</a>
+        </div>
+    </form>
+    
+</div>
+{% endblock %}

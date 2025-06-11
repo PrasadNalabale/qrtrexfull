@@ -1,0 +1,33 @@
+{% extends 'qr/dashboardBase.html' %}
+{% load static %}
+{% block content %}
+
+{% if menus %}
+    {% for item in menus %}
+        
+        <div class="row d-flex align-items-center justify-content-center mt-3 ">
+            <div class="col-3">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid rounded-4" style="max-width:100px">
+                {% else %}
+                    <img src="{% static 'qr/images/default.png' %}" alt="{{ item.name }}" class="img-fluid rounded-4" style="max-width:100px">
+                {% endif %}
+            </div>
+            <div class="col-3">
+                <h5 class="text-capitalize">{{ item.name }}</h5>
+            </div>
+            <div class="col-3">
+                <h5>&#8377; {{ item.price }}</h5>
+            </div>
+            <div class="col-3">
+                <a href="{% url 'update_menu_item' item.id %}" class="btn btn-org">Edit</a>
+                <a href="{% url 'delete_menu_item' item.id %}" class="btn btn-dar">Delete</a>
+            </div>
+        </div>
+        <hr>
+            
+    {% endfor %}
+{% else %}
+    <p>No menus available.</p>
+{% endif %}
+{% endblock %}

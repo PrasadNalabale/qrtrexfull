@@ -1,0 +1,36 @@
+{% extends 'qr/base.html' %}
+
+    {% block title %}Dashboard {% endblock %}
+
+        {% block content %}
+
+        <div class="container p-3 border rounded-5 front-div">
+            <div class="row mt-5">
+                <div class="col p-2 flex-grow-1 d-flex justify-content-start">
+                    <h3 class="text-start">Transactions</h3>
+                </div>
+            </div>
+            {% if payments %}
+            {% for payment in payments %}
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-2">
+                    <p>{{payment.created_at}}</p>
+                </div>
+                <div class="col-2">
+                    <p>{{payment.order_id}}</p>
+                </div>
+                <div class="col-2">
+                    <p>{{payment.payment_id}}</p>
+                </div>
+                <div class="col-2">
+                    <p>{{payment.amount}}</p>
+                </div>
+                <div class="col-2">
+                    <p>{{payment.status}}</p>
+                </div>
+                
+            </div>
+            <hr>
+        </div>
+
+        {% endblock %}

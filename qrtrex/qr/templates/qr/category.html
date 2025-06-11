@@ -1,0 +1,114 @@
+{% extends 'qr/base.html' %}
+{% block title %} Update Menu Item {% endblock %}
+{% block content %}
+{% include 'inc/navbar.html' %}
+
+<div class="container p-3 border rounded-5 front-div">
+    <div class="row mt-5">
+        <div class="col p-2 flex-grow-1 d-flex justify-content-start">
+            <h3 class="text-start">Menu Category</h3>
+
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button type="button" class=" btn btn-outline-in" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Add</button>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        {% if menus %}
+        {% for menu in menus %}
+        <div class="row">
+            <div class="col m-2 d-flex align-items-center justify-content-start">
+                <h5 class="text-start text-capitalize">{{ menu.menu_name }}</h5>
+
+            </div>
+            <div class="col m-2 d-flex align-items-center justify-content-end">
+                <a href="{% url 'deleteCategory' user menu.id %}" class=" btn btn-dar"
+                    role="button">Delete</a>
+                <a href="" class=" btn btn-org"
+                    role="button" onclick="openEditModal('{{ menu.id }}', '{{ menu.menu_name }}')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Delete</a>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="row">
+            <div class="col">
+                <h3>You dont have menu category <a href="#">click here</a> to add new.</h3>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Category</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'category' user %}" method="POST" id="myForm">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category Name</label>
+                                <input type="text" class="form-control text-capitalize" id="categoryInput" placeholder="Breakfast,Lunch,Dinner,....etc." name="categoryName" required>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-outline-in">Add</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- second modal -->
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" id="editCategoryForm">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="category_id" id="editCategoryId">
+                        <div class="mb-3">
+                            <label for="editCategoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" name="categoryName" id="editCategoryName" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dar" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-org">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+  function openEditModal(id, name) {
+    document.getElementById('editCategoryId').value = id;
+    document.getElementById('editCategoryName').value = name;
+    
+    // Optional: set form action dynamically if needed
+    document.getElementById('editCategoryForm').action = `/update-category/${id}/`;
+  }
+</script>
+
+{% endblock %}

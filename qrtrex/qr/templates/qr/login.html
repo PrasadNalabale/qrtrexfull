@@ -1,0 +1,73 @@
+{% extends 'qr/base.html' %}
+{% load static %}
+{% block content %}
+{% include 'inc/qrtrex_navbar.html' %}
+<div id="notification" class="notification">
+    <span id="notification-message"></span>
+    <button onclick="closeNotification()">X</button>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 registration-card shadow rounded-3">
+        <h3 class="text-center text-primary">Sign In</h3>
+        {% if messages %}
+        <div class="container-sm">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mt-3 alert-dismissible fade show " role="alert">
+                    <p>{{ message }}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="my-3">
+                <label class="form-label">Email </label>
+                <input type="email" class="form-control" placeholder="Enter your registered email" name="email">
+            </div>
+            <div class="mb-3 position-relative">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
+                    <span class="input-group-text" >
+                        <a type="btn btn-primary"  class="eye-icon" id="togglePassword1" onclick="showPassword()"><i class="fa-solid fa-eye" id="togglePassword"></i></a>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <p class="text-center mt-2">Forgott password ? <a href="#" class="text-primary" >click here. </a></p>
+    </div>
+</div>
+
+<script>
+    function showPassword() {
+    event.preventDefault(); // Prevent anchor tag from navigating
+    console.log("clicked");
+    let passwordInput = document.getElementById("password");
+    // let togglePassword = document.getElementById("togglePassword");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

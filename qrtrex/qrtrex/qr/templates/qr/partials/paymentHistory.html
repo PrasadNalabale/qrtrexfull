@@ -1,0 +1,32 @@
+{% extends 'qr/dashboardBase.html' %}
+{% load custom_filters %}
+{% block content %}
+{% if payments %}
+<table class="table caption-top table-responsive">
+    <caption>List of Transaction's</caption>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Payment Id</th>
+        <th scope="col">Amount in (&#x20B9;.)</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+    {% for payment in payments %}
+        <tr>
+            <td>{{payment.created_at}}</th>
+            <td>{{payment.payment_id}}</td>
+            <td>&#x20B9; {{payment.amount|divide:100 }}</td>
+            <td class="text-capitalize"><i class="fa-solid fa-circle" style="color: #63E6BE;"></i> {{payment.status}}</td>
+        </tr>
+    {% endfor %}
+
+      
+    </tbody>
+</table>
+{% else %}
+<p>No Paymenty history available.</p>
+{% endif %}
+{% endblock %}

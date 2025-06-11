@@ -1,0 +1,97 @@
+{% extends 'qr/qr_menu_base.html' %}
+{% load static %}
+    {% load custom_filters %}
+        {% block content %}
+
+        <div class="container mt-5">
+
+
+            <button class="btn btn-primary translate" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Rate Us</button>
+
+            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 50vh;
+             border-top-right-radius: 15px; border-top-left-radius: 15px; ">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Ratings/Feedback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body small">
+                    <form method="post" action="{% url 'ratings' restaurant.restaurant_id table %}">
+                        {% csrf_token %}
+                        <!-- <h3 class="text-center">Rate this Restaurant</h3> -->
+        
+                        <fieldset class="starability-basic">
+                        <!-- <legend>Rate this restaurant:</legend> -->
+                         
+            
+                        <div class="mb-3" style="width: 250px;">
+                            <label for="name" class="form-label">Enter name :</label>
+                            <input type="text" class="form-control" placeholder="Enter your name" name="name">
+                        </div>
+                    
+                        <input type="radio" id="rate5" name="stars" value="5" required />
+                        <label for="rate5" title="Amazing">5 stars</label>
+                    
+                        <input type="radio" id="rate4" name="stars" value="4" />
+                        <label for="rate4" title="Very good">4 stars</label>
+                    
+                        <input type="radio" id="rate3" name="stars" value="3" />
+                        <label for="rate3" title="Average">3 stars</label>
+                    
+                        <input type="radio" id="rate2" name="stars" value="2" />
+                        <label for="rate2" title="Not good">2 stars</label>
+                    
+                        <input type="radio" id="rate1" name="stars" value="1" />
+                        <label for="rate1" title="Terrible">1 star</label>
+                        </fieldset>
+                    
+                        <textarea name="review" class="form-control mt-3" placeholder="Leave a comment (optional)"></textarea>
+                    
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+            
+
+        </div>
+        <div class="container mt-3" >
+            {% for rate in ratings %}
+            <div class="ratings border rounded-4 p-3 m-2" style="background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                    
+                    <div class="col d-flex justify-content-start">
+                        <p class="text-capitalize ml-2">{{rate.name}}</p>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                        <small>{{rate.created_at}}</small>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="d-flex align-items-center">
+                        {% with rate.stars|add:"0" as stars %}
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= stars %}
+                                    <span style="color: gold; font-size: 20px;">&#9733;</span>
+                                {% else %}
+                                    <span style="color: lightgray; font-size: 20px;">&#9733;</span>
+                                {% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="row">
+                    <p>{{rate.review}}</p>
+                </div>
+            </div>
+            
+            
+            {% endfor %}
+        </div>
+
+
+        
+        
+        {% endblock %}
+  

@@ -1,0 +1,119 @@
+{% extends 'qr/dashboardBase.html' %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+
+<style>
+    /* .data {
+        width: 50%;
+        height:100%;
+    }
+    .photo {
+        width:50%;
+        height: 100%;
+    } */
+    .image {
+        width: 300px;
+        height: auto;
+    } 
+    .form-label {
+        opacity: 0.7;
+    }
+    .form-control, .form-select, .border-b {
+        border: 1px solid #efd1c1;
+        box-shadow: none;
+        color: #403f41;
+    }
+    
+    .btn-org {
+        border: 1px solid #fd6f02;
+        color: #fd6f02;
+    }
+    .btn-org:hover {
+        background-color: #fd6f02;
+        color: #ffffff;
+    }
+    .btn-dar, .btn-dar:hover {
+        border: 1px solid rgb(61, 61, 61);
+        color: black;
+    }
+        
+</style>
+
+<div class="container-fluid">
+    <form id ="restaurantForm" action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row d-flex justify-content-center  p-2 gx-2 border rounded-5">
+            <div class="col-md-6 order-2 order-md-1 mt-5 mt-md-0">
+                <div class="mb-3">
+                    <label for="user" class="form-label">Username</label>
+                    <input class="form-control" id="user" type="text" value="{{user}}" name="user" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="restaurant-id" class="form-label">Restaurant Id</label>
+                    <input class="form-control" type="number" value="{{restaurant.restaurant_id}}" name="restaurant_id" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="restaurant-name" class="form-label">Restaurant Name</label>
+                    <input type="text" class="form-control text-capitalize" value="{{restaurant.restaurant_name}}" name="restaurant_name">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label ">Address</label>
+                    <textarea class="form-control text-capitalize" rows="3" value="{{restaurant.address}}" name="address">{{restaurant.address}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile" class="form-label ">Mobile</label>
+                    <input type="number" class="form-control" value="{{restaurant.mobile}}" name="mobile">
+                </div>
+                <div class="mb-3">
+                    <label for="wifi" class="form-label">Wi-Fi</label>
+                    <input class="form-control" type="text" value="{{restaurant.wifi}}" name="wifi">
+                </div>
+                <div class="mb-3">
+                    <label for="Category" class="form-label">Category</label>
+                    <select class="form-select" aria-label="Default select example" name="category" >
+                        {% for value, display in restaurant.CATEGORY_CHOICES %}
+                        <option value="{{value}}" {% if value == restaurant.category %} selected {% endif %}>{{display}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="membership" class="form-label">Membership Plan</label>
+                    <input class="form-control text-capitalize" type="text" value="{{membership.membership_type}}" name="membership_type" readonly>
+                </div>
+            
+                <div class="my-3 d-flex justify-content-center ">
+                    <button type="submit" class="btn btn-org mx-2">Update</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-dar mx-2">Cancel</a>
+                </div>
+        
+            </div>
+            <div class="col-md-6 order-1 order-md-2">
+                <h1 class="text-center opacity-50 mt-5">Upload your logo</h1>
+                
+                <div class="row mt-5 justify-content-center align-items-center">
+                    <div class="profile-image border rounded-2 image">
+                        <img id="logoPreview" src="{{ restaurant.logo.url }}" alt="{{ restaurant.restaurant_name }}'s logo" class="img-fluid w-100">
+                    </div>
+            
+                    <!-- Hidden file input -->
+                    <input type="file" id="logoInput" accept="image/*" name="image" onchange = "readUrl(this,'logoPreview');" style="display: none;">
+            
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <button type="button" class="btn btn-org" onclick="document.getElementById('logoInput').click()">Upload</button>
+                        <button type="button" class="btn btn-dar" data-default-src="{% static 'qr/images/defaultMenuImage2.jpg' %}" onclick="removeImage('logoInput', 'logoPreview', this.getAttribute('data-default-src'))">Remove</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+  
+
+
+  

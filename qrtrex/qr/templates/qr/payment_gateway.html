@@ -1,0 +1,78 @@
+{% extends 'qr/base.html' %}
+{% load custom_filters %}
+
+    {% block title %}Payment {% endblock %}
+
+        {% block content %}
+        
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <style>
+            body {
+              background-color: #f8f9fa;
+            }
+            .payment-card {
+              box-shadow: 0 0 15px rgba(0,0,0,0.1);
+              border-radius: 8px;
+            }
+          </style>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center mt-5">
+              <div class="col-md-6">
+          
+                <div class="card payment-card">
+                  <div class="card-header text-center" style="color: #e67e22;">
+                    <h4>Confirm Your Payment</h4>
+                  </div>
+                  <div class="card-body text-center">
+          
+                    <h5 class="mb-3 text-capitalize">Membership: {{ membership_name }}</h5>
+                    <p class="lead">Amount to Pay: ₹{{ amount|divide:100 }}</p>
+          
+                    <button id="rzp-button" class="btn btn-success w-100 mt-3">Pay with Razorpay</button>
+          
+                  </div>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+
+
+
+        
+
+        
+        
+
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}",
+            "amount": "{{ amount }}",
+            "currency": "INR",
+            "name": "QR Menu Membership",
+            "description": "Restaurant Membership Payment",
+            "order_id": "{{ order_id }}",
+            "handler": function (response) {
+                fetch("{% url 'membership_payment_success' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(response)
+                }).then(res => {
+                    window.location.href = "/generate_qr/";
+                });
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        document.getElementById("rzp-button").onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        };
+    </script>
+
+        {% endblock %}

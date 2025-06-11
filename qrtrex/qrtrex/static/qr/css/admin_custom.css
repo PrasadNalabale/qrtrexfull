@@ -1,0 +1,15 @@
+/* Change background of entire admin */
+body {
+    background-color: #f1f1f1 !important;
+}
+
+/* Change header bar color */
+#header {
+    background-color: #e67e22 !important;
+    color: white;
+}
+
+/* Optional: Change sidebar or form colors */
+.module {
+    background-color: #ffffff;
+}

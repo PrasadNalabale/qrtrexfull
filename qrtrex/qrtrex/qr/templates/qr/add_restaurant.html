@@ -1,0 +1,279 @@
+{% extends 'qr/base.html' %}
+{% load static %}
+
+
+<style>
+    /* .data {
+        width: 50%;
+        height:100%;
+    }
+    .photo {
+        width:50%;
+        height: 100%;
+    } */
+    .image {
+        width: 300px;
+        height: auto;
+    } 
+    .form-label {
+        opacity: 0.7;
+    }
+    .form-control, .form-select, .border-b {
+        border: 1px solid #efd1c1;
+        box-shadow: none;
+        color: #403f41;
+    }
+    
+    .btn-org {
+        border: 1px solid #fd6f02;
+        color: #fd6f02;
+    }
+    .btn-org:hover {
+        background-color: #fd6f02;
+        color: #ffffff;
+    }
+    .btn-dar, .btn-dar:hover {
+        border: 1px solid rgb(61, 61, 61);
+        color: black;
+    }
+    textarea::placeholder {
+        opacity: 0.7;
+        color: #fd6f02;
+    }
+        
+</style>
+
+<!--
+
+    
+
+        
+        
+        
+        <div class="container">
+            <div class="row mt-5 d-flex justify-content-center align-items-center">
+                <div class="col-md-10 justify-content-end">
+                    <h1 class="text-center col">QrTrex</h1>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end">
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm mx-auto">Logout</a>
+                </div>
+                
+                
+            </div>
+            <div class="row">
+                <h3>Restaurant Registration</h3>
+            </div>
+            <form action="{% url 'add_restaurant' %}" method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-sm bg-light">
+                {% csrf_token %}
+            
+                
+                <div class="mb-3">
+                    <label for="restaurant_name" class="form-label">Restaurant Name</label>
+                    <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" required value="{{ restaurant.restaurant_name }}">
+                </div>
+            
+                
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required>{{ restaurant.address }}</textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="restaurant_type" class="form-label">Restaurant Type</label>
+                    <select class="form-select" id="restaurant_type" name="restaurant_type" required>
+                        <option disabled selected>Select Type</option>
+                        {% for value, label in restaurant_type %}
+                            <option value="{{ value }}" {% if restaurant.restaurant_type == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="membership_type" class="form-label">Membership Type</label>
+                    <select class="form-select" id="membership_type" name="membership_type" required>
+                        <option disabled selected>Select Membership</option>
+                        {% for value, label in membership_choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="mobile" class="form-label">Mobile</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" maxlength="12" required value="{{ restaurant.mobile }}">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required value="{{ restaurant.email }}">
+                </div> 
+            
+                <div class="mb-3">
+                    <label for="restaurant_logo" class="form-label">Restaurant Logo</label>
+                    <input type="file" class="form-control" id="restaurant_logo" name="restaurant_logo" accept="image/*">
+                    {% if restaurant.logo %}
+                        <div class="mt-2">
+                            <img src="{{ restaurant.logo.url }}" alt="Logo" class="rounded-circle" style="max-width: 150px; height: auto;">
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option disabled selected>Select Category</option>
+                        {% for value, label in restaurant_category %}
+                            <option value="{{ value }}" {% if restaurant.category == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="wifi" class="form-label">WiFi Availability</label>
+                    <input type="text" class="form-control" id="wifi" name="wifi" value="{{ restaurant.wifi }}">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="fassai" class="form-label">FSSAI Number</label>
+                    <input type="number" class="form-control" id="fassai" name="fassai" required value="{{ restaurant.fassai }}">
+                </div>
+            
+                <button type="submit" class="btn btn-primary w-100">Proceed To Payment</button>
+            </form>
+        </div>
+
+         -->
+
+
+{% block content %}
+
+<!-- Include Bootstrap CSS in your base template or directly -->
+<div class="container mt-5">
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Library</li>
+        </ol>
+    </nav>
+</div>
+
+
+{% if messages %}
+    <div class="container-sm">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mt-3 w-50 mx-auto alert-dismissible fade show " role="alert">
+                <p>{{ message }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<div class="container mt-5 mb-5">
+  <form id="restaurantForm" action="{% url 'add_restaurant' %}" method="POST" enctype="multipart/form-data" class="p-4 border rounded-4 shadow bg-white">
+    {% csrf_token %}
+
+    <h3 class="text-center mb-4">Add Restaurant</h3>
+
+    <div class="row g-3">
+
+        <div class="d-flex justify-content-center">
+            <img id="logoPreview" src="{% static 'qr/images/defaultMenuImage2.jpg' %}" alt="logo" class="img-fluid w-100  border rounded-5"style="max-width: 200px;">
+        </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="logoInput" accept="image/*" name="restaurant_logo" onchange = "readUrl(this,'logoPreview');" style="display: none;">
+        <div class="d-flex justify-content-center">
+            <p class="form-label">Upload logo</p>
+        </div>
+        
+
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <button type="button" class="btn btn-org" onclick="document.getElementById('logoInput').click()">Upload</button>
+            <button type="button" class="btn btn-dar" data-default-src="{% static 'qr/images/defaultMenuImage2.jpg' %}" onclick="removeImage('logoInput', 'logoPreview', this.getAttribute('data-default-src'))">Remove</button>
+        </div>
+
+      <!-- Restaurant Name -->
+        <div class="col-md-6">
+            <label for="restaurantNameInput" class="form-label">Restaurant Name</label>
+            <input type="text" class="form-control" id="restaurantNameInput" name="restaurant_name" value="{{ restaurant.restaurant_name }}" required>
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="col-md-6">
+            <label for="mobileInput" class="form-label">Mobile Number</label>
+            <input type="tel" class="form-control" id="mobileInput" name="mobile" value="{{ restaurant.mobile }}" maxlength="12" required>
+        </div>
+        <!-- Restaurant Type-->
+        <div class="col-md-6">
+            <label for="category" class="form-label" id="categoryLabel">Restaurant Type</label>
+                <select class="form-select" id="restaurant_type" name="restaurant_type" required>
+                    <option disabled selected>Select Category</option>
+                    {% for value, label in restaurant_type %}
+                        <option value="{{ value }}" {% if restaurant.category == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-12">
+            <label for="addressInput" id="addresslabel" class="form-label">Address</label>
+            <textarea class="form-control" name="address" id="addressInput" rows="3" autocomplete="on" required>{{ restaurant.address }}</textarea>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-12">
+            <label for="descriptionInput" id="descriptionlabel" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="descriptionInput" rows="3" autocomplete="on" 
+            placeholder="Here you can add additional information for your guests, like taxes, service fees, restaurant working hours, contacts, delivery terms, and more." required>{{ restaurant.description }}</textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+            <label for="category" class="form-label" id="categoryLabel">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                    <option disabled selected>Select Category</option>
+                    {% for value, label in restaurant_category %}
+                        <option value="{{ value }}" {% if restaurant.category == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+        </div>
+
+        <!-- WiFi -->
+        <div class="col-md-6">
+            <label for="wifiInput" id="wifiLabel" class="form-label">Wi-Fi Details</label>
+            <input type="text" class="form-control" id="wifiInput" name="wifi" value="{{ restaurant.wifi }}" placeholder="Leave blank if wi-fi not available">
+        </div>
+
+        <!-- FSSAI Number -->
+        <div class="col-md-6">
+            <label for="fassaiInput" id="fassaiLabel" class="form-label">FSSAI Number</label>
+            <input type="number" id="fassaiInput" class="form-control" name="fassai" value="{{ restaurant.fassai }}" auticomplete="on" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="membership_type" id="membershipLabel" class="form-label">Membership Type</label>
+            <select class="form-select" id="membership_type" name="membership_type" required>
+                <option disabled selected>Select Membership</option>
+                {% for value, label in membership_choices %}
+                    <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      
+
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="d-flex justify-content-center mt-4">
+      <button type="submit" class="btn btn-org me-2" id="btnSave">Save</button>
+      <a href="{% url 'dashboard' %}" class="btn btn-dar" id="btnCancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+
+{% endblock %}

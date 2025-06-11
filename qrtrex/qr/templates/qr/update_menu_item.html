@@ -1,0 +1,74 @@
+{% extends 'qr/base.html' %}
+{% block title %} Update Menu Item {% endblock %}
+{% block content %}
+        {% include 'inc/navbar.html' %}
+        <div class=" my-5 d-flex align-items-center justify-content-center border rounded-5">
+            <form method="POST" action="{% url 'update_menu_item' item.id %}" enctype="multipart/form-data" id="myform">
+                {% csrf_token %}
+                <div class="mt-1">
+                    <h2 class="text-center">Update Menu Item</h2>
+                </div>
+                <div class=" d-flex align-items-center justify-content-center">
+                    <img src="{{ item.image.url }}" class="img-fluid w-25 rounded-circle">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Change Image:</label>
+                    <input class="form-control" type="file" name="image" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label for="menu-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" value="{{item.name}}" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label ">Description</label>
+                    <textarea class="form-control" rows="3" value="{{item.description}}" name="description">{{item.description}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label ">Price</label>
+                    <input type="number" class="form-control" value="{{item.price}}" name="price">
+                </div>
+                <div class="mb-3">
+                    <select class="form-select" aria-label="Default select example" name="category">
+                        {% for value, display in item.CATEGORY %}
+                        <option value="{{value}}" {% if value == item.category %} selected {% endif %}>{{display}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input type="hidden" name="is_available" value="off">
+                    <input class="form-check-input" type="checkbox" value="on" name="is_available" id="flexCheckChecked" {% if item.is_available %}checked{% endif %}>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Is Available
+                    </label>
+                </div>
+                <div class="my-3 d-flex justify-content-center ">
+                    <button type="submit" class="btn btn-outline-in mx-2">Update</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-warning mx-2">Cancel</a>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete {{item.name}} ?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure want to delete {{item.name}} ?</p>
+                                    <p>This will permenently delete {{item.name}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'delete_menu_item' item.id %}" class="btn btn-outline-danger">Delete Anyway</a>
+                                    <button type="button" class="btn btn-outline-in" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+
+
+
+{% endblock %}

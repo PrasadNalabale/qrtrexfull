@@ -1,0 +1,53 @@
+{% extends 'qr/base.html' %}
+
+    {% block title %}Payment {% endblock %}
+
+        {% block content %}
+
+        <div class="container">
+            <a href="{% url 'logout' %}" class="btn btn-outline-warning mx-auto">Logout</a>
+            {% if qr_codes %}
+            <hr>
+            <h4 class="mb-3">🧾 Generated QR Codes</h4>
+            <form method="post" action="{% url 'download_qr_pdf' %}">
+                {% csrf_token %}
+                <input type="hidden" name="total_table" value="{{ total_tables }}">
+                
+                <!-- Align button to the right -->
+                <div class="text-right">
+                    <button type="submit" class="btn btn-success">Download All as PDF</button>
+                </div>
+            </form>
+            <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+            {% for qr in qr_codes %}
+                <div class="col">
+                    <div class="card text-center shadow-sm p-3">
+                        <img src="data:image/png;base64,{{ qr.image }}" class="card-img mx-auto" style="max-width: 220px;" alt="QR Code">
+                        <div class="card-body">
+                            <small class="text-muted">{{ qr.link }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <div class="row">
+                <h1 class="text-center">Sorry, something went wrong.</h1>
+            </div>
+            {% endif %}
+        </div>
+        {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

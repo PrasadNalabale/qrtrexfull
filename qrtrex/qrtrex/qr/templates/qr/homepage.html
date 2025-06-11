@@ -1,0 +1,287 @@
+{% extends 'qr/base.html' %}
+{% load static %}
+{% block content%}
+
+    <div class="container-fluid">
+      {% include 'inc/qrtrex_navbar.html' %}
+      <!-- Pop-up notification container -->
+    <div id="notification" class="notification">
+        <span id="notification-message"></span>
+        <button onclick="closeNotification()">X</button>
+    </div>
+    {% if messages %}
+    <div class="container-sm">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mt-3 w-50 mx-auto alert-dismissible fade show " role="alert">
+                <p>{{ message }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row " style="height: 100vh;">
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div class="col text-center">
+                <h1 class="text-center">Welcome to <span class="mark-text animate__animated animate__flash">QrTrex</span> Digital <span class="mark-text animate__animated animate__flash">QR Menu</span> </h1>
+                <p class="ml-2">Smart, Contactless QR Menus for Modern Dining.</p>
+                <p>Say goodby to paper menus and hello t a seamless dining experience. With QrTrex, your customers can scan a 
+                    QR code to instantly access your digital menu anytime, anywhere.
+                </p>
+                <p><i class="fa-solid fa-link" style="color: #fd6f02;"></i> No App Required | <i class="fa-solid fa-mobile-screen" style="color: #fd6f02;"></i> Mobile Friendly | <i class="fa-solid fa-bolt" style="color: #fd6f02;"></i> Instant Access</p>
+                <a href="{% url 'register' %}" class="ml-3 btn btn-outline-warning custom-btn">Get Started</a>
+                <!-- <a class="ml-3 btn btn-outline-warning custom-btn text-center" onclick="showNotification('This feature is currently unavailable')">Create Qr Menu</a> -->
+            </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img src="{% static 'qr/images/maincover.jpeg' %}" class="img-fluid rounded-5" alt="qrimage">
+        </div>
+    </div>
+    <div class="container">
+        <div class="col m-2">
+            <h1 class="ml-2 text-underline" style="color: #fd6f02;">Why QR Menu ?</h1>
+        </div>
+        <div class="row rounded-3 mt-4 mx-2">
+            <div class="col-md-7 d-flex align-items-center justify-content-center">
+                <div class="col text-start mx-2">
+                    <p class="fs-4"><i class="fa-solid fa-star" style="color: #fd6f02;"></i> Setup in just 10 minutes.</p>
+                    <p class="fs-4"><i class="fa-solid fa-star" style="color: #fd6f02;"></i> Eliminate printing cost and waste.</p>
+                    <p class="fs-4"><i class="fa-solid fa-star" style="color: #fd6f02;"></i> Gain insights into customer behavior.</p>
+                    <p class="fs-4"><i class="fa-solid fa-star" style="color: #fd6f02;"></i> Serve customers in their preferred language.</p>
+                    <p class="fs-4"><i class="fa-solid fa-star" style="color: #fd6f02;"></i> Impress with a high-end, contactless menu experience.</p>
+                </div>
+            </div>
+            <div class="col-md-5 d-flex align-items-center justify-content-center" >
+                <img src="{% static 'qr/images/Qrscan.png' %}" class="img-fluid w-100 rounded-3 " alt="qr_image">
+            </div>
+        </div>
+        <div class="row mt-5 mx-2">
+            <div class="col-md-6 d-flex align-items-center justify-content-center order-md-1 order-2">
+                <img src="{% static 'qr/images/Picture4.png' %}" class="img-fluid w-100 rounded-3" style="max-height: 500px; max-width: 400px;" alt="scanning qr menu"/>
+            </div>
+            <div class="col-md-6 order-md-2 order-1">
+                <h1 style="color: #fd6f02;">How It Works ?</h1>
+                <div class="works mt-5">
+                    
+                    <p class="fs-4"> 1. <strong>Scan</strong> the unique QR Code from any smartphone.</p><br/>
+                    <p class="fs-4"> 2. <strong>Browse</strong> a beautifully optimized, mobile-friendly menu.</p><br/>
+                    <p class="fs-4"> 3. <strong>Choose & Enjoy</strong>-offline or online, with optional ordering and analytics.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row rounded-3  py-5 " >
+        
+            <div class="row mb-3">
+                <h1 class="text-center m-1" style="color: #fd6f02;">QrTrex features :</h1>
+            </div>
+            <div class="row m-2 d-flex justify-content-center align-items-center">
+                <div class="col-md-5 mx-3 my-sm-2 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-signal" style="color: #fd6f02;"></i> Offline Mode</h5>
+                    <p>- Your menu works even with poor or no internet. Perfect for remote locations or unreliable networks.</p>
+                </div>
+                <div class="col-md-5 mx-3 my-sm-2 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-chart-line" style="color: #fd6f02;"></i> Detailed Analytics</h5>
+                    <p>- Track scan rates, menu popularity, and customer behavior to make data-driven decisions.</p>
+                </div>
+            </div>
+            <div class="row m-2 d-flex justify-content-center align-items-center">
+                <div class="col-md-5 mx-3 my-sm-2 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-tower-broadcast" style="color: #fd6f02;"></i> Contactless Experience</h5>
+                    <p>- Customers scan a QR Code to instantly access tour digital menu. No app, no downloads.</p>
+                </div>
+                <div class="col-md-5 mx-3 my-sm-2 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-repeat" style="color: #fd6f02;"></i> Real-Time Menu Control</h5>
+                    <p>- Edit items, update prizes, or remove out-of-stock dishes-live and hassle free.</p>
+                </div>
+            </div>
+            <div class="row m-2 d-flex justify-content-center align-items-center">
+                <div class="col-md-5 mx-3 my-sm-2 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-language" style="color: #fd6f02;"></i> Multi-Language Support</h5>
+                    <p>- Cater to diverse diners with your own language and translation options.</p>
+                </div>
+                <div class="col-md-5 mx-3 my-2 my-md-0 p-2 rounded-3 shadow-sm">
+                    <h5><i class="fa-solid fa-seedling" style="color: #44e708;"></i> Eco-Friendly Approach</h5>
+                    <p>- Go paperless and reduce your environmental impact while keeping your brand modern.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="col-md-9 mt-5 p-5 shadow rounded-5">
+                <h3><i class="fa-solid fa-earth-asia" style="color: #32e010;"></i> Eco-Conscious Dining</h3>
+                <p class="mt-5">At <strong>QrTrex</strong>, sustainability is at the core of everything we do. By eliminating paper
+                    menus, we help tour business reduce waste, cut costs, and show your guests that
+                    you care about the planet.
+                </p>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-center align-items-center my-5">
+            <div class="col-md-9 mt-5 p-5 shadow rounded-5">
+                <h3><i class="fa-solid fa-user-tie" style="color: #fd6f02;"></i> About Us</h3>
+                <p><strong>Smart Menus, Smart Dining</strong></p>
+                <p class="mt-5">
+                    At <strong>QrTrex</strong>, we help restaurants of all sizes embrace the future
+                    with inteligent, eco-conscious technology. Our mission is to replace paper menus with a smarter, cleaner
+                    and more insightful digital experience - accessible at the tap of a phone.
+                </p>
+                <br>
+                <p>Whether you run a fine dining restaurant, a cozy cafe, a bustling food truck, or a luxury resort, 
+                    QrTrex is your partner in going digital without loosing the human touch.
+                </p>
+                <br>
+                <p><strong>From QR to your plate - smarter dining starts here.</strong></p>
+            </div>
+        </div>
+        <div class="row mt-5 g-3" id="pricing">
+            <div class="price d-flex justify-content-center align-items-center">
+                <h1 class="mb-3 text-center rounded-5 shadow-sm p-3" style="color: #fd6f02;">Pricing Plan's</h1>
+            </div>
+            <div class="shadow col-12 col-md-3 mx-auto d-flex align-items-center justify-content-center rounded-5" >
+                <div class="col p-3">
+                    <h2 class="text-center mt-1"><i class="fa-solid fa-award" style="color: #4b0150;"></i></h2>
+                    <h2 class="text-center mt-3" style="color:#4b0150;">&#8377; 1499 /- mon</h2>
+                    <p class="mt-3"><i class="fa-solid fa-money-bill"></i> <strong>Pay monthly.</strong></p>
+                    <p class=""><i class="fa-solid fa-qrcode"></i> 10 Physical Standard QR code's.</p>
+                    <p class=""><i class="fa-solid fa-rotate"></i> Unlimited Scan's.</p>
+                    <p class=""><i class="fa-solid fa-headset"></i> 24/7 Support.</p>
+                    <p class=""><i class="fa-solid fa-book"></i> Feedback collection Tool's.</p>
+                    <p class=""><i class="fa-solid fa-user-tie"></i> Dedicated Admin Panel.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3 mx-auto  d-flex align-items-center justify-content-center rounded-5 shadow">
+                <div class="col p-3 ">
+                    <h2 class="text-center mt-1"><i class="fa-solid fa-medal fa-fade" style="color: #ff6500;"></i></h2>
+                    <h2 class="text-center mt-3" style="color:#ff6500;">&#8377; 1399 /- mo</h2>
+                    <p class="mt-3"><i class="fa-solid fa-money-bill"></i> <strong>Pay on every 6 months.</strong></p>
+                    <p class=""><i class="fa-solid fa-qrcode"></i> 20 Customised QR code's.</p>
+                    <p class=""><i class="fa-solid fa-rotate"></i> Unlimited Scan's.</p>
+                    <p class=""><i class="fa-solid fa-headset"></i> 24/7 Support.</p>
+                    <p class=""><i class="fa-solid fa-book"></i> Feedback collection Tool's.</p>
+                    <p class=""><i class="fa-solid fa-user-tie"></i> Dedicated Admin Panel.</p>
+                </div>
+            </div>
+
+            <div class="shadow col-md-3 mx-auto  p-0 d-flex align-items-center justify-content-center rounded-5">
+                <div class="col p-3">
+                    <h2 class="text-center mt-1"><i class="fa-solid fa-trophy" style="color: #00ff00;"></i></h2>
+                    <h2 class="text-center mt-3" style="color:#00ff00;">&#8377; 1299 /- mo</h2>
+                    <p class="mt-3"><i class="fa-solid fa-money-bill"></i> <strong>Pay once in a Year.</strong></p>
+                    <p class=""><i class="fa-solid fa-qrcode"></i> 10 Customised waterproof QR code's.</p>
+                    <p class=""><i class="fa-solid fa-rotate"></i> Unlimited Scan's.</p>
+                    <p class=""><i class="fa-solid fa-headset"></i> 24/7 Support.</p>
+                    <p class=""><i class="fa-solid fa-book"></i> Feedback collection Tool's.</p>
+                    <p class=""><i class="fa-solid fa-user-tie"></i> Dedicated Admin Panel.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 rounded-5 shadow">
+            <h2 class="m-3">Having <span class="mark-text">Question's</span> ? Feel <span class="mark-text">Free</span> to contact us.</h2>
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <div class="contact p-md-5 p-0">
+                    <h4>Ready to Go Digital ?</h4>
+                    <p>Join restaurants across the country switching to smarter,eco-conscious digital menus with QrTrex.</p>
+                    <p><i class="fa-solid fa-envelope" style="color: #fd6f02;"></i> help@qrtrex.com</p>
+                    <p><i class="fa-solid fa-phone" style="color: #fd6f02;"></i> +91-9623920576</p>
+                    <p><i class="fa-solid fa-globe" style="color: #fd6f02;"></i> www.qrtrex.com</p>
+                </div>
+                <!-- <img src="{% static 'qr/images/enquiry.png' %}" class="img-fluid" alter="Enqiry"> -->
+                
+            </div>
+            <div class="col-md-6 d-block align-items-center justify-content-center">
+                <form method="POST" action="{% url 'enquiry' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name*</label>
+                        <input type="text" class="form-control form-control shadow " name="name" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email*</label>
+                        <input type="email" class="form-control shadow " name="email" placeholder="Your E-mail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile*</label>
+                        <input type="number" class="form-control shadow " name="number" placeholder="Phone Number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message*</label>
+                        <textarea class="form-control shadow " name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-outline-primary custom-btn justify-content-center shadow ">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-3 p-3 d-flex align-items-center justify-content-center">
+                <div class="col">
+                    <p class="fs-5 mark-text">QRTrex</p>
+                    <a href="#" class="d-block custom-link">Home</a>
+                    <a href="#" class="d-block custom-link">Contact Us</a>
+                    <a href="#" class="d-block custom-link">About Us</a>
+                    <a href="#" class="d-block custom-link">Pricing</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 p-3 d-flex align-items-center justify-content-center">
+                <div class="col">
+                    <p class="fs-5 mark-text">QR Code's</p>
+                    <a href="#" class="d-block custom-link">Types of QR Code</a>
+                    <a href="#" class="d-block custom-link">Shop QR Code's</a>
+                    <a href="#" class="d-block custom-link">QR Code generator</a>
+                    <a href="#" class="d-block custom-link">Shop QR Stands</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 p-3 d-flex align-items-center justify-content-center">
+                <div class="col">
+                    <p class="fs-5 mark-text">Learning And Support</p>
+                    <a href="#" class="d-block custom-link">Demo Session's</a>
+                    <a href="#" class="d-block custom-link">Having issue ?</a>
+                    <a href="#" class="d-block custom-link">Learning Videos</a>
+                    <a href="#" class="d-block custom-link">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+    
+
+
+    
+
+    
+{% endblock %}
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
